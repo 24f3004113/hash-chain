@@ -11,12 +11,13 @@ jobs:
     steps:
       - name: marker-9d0f6265
         run: echo "marker=9d0f6265"
-
+        
       - name: Compute hash chain
         env:
           MY_SECRET: ${{ secrets.MY_SECRET }}
         run: |
-          VERIFY_HASH=$(echo -n "${MY_SECRET}github-verified" | sha256sum | cut -c1-10)
+          echo "Secret length check: ${#MY_SECRET}"
+          VERIFY_HASH=$(printf "%s" "${MY_SECRET}github-verified" | sha256sum | cut -c1-10)
           echo "Verify hash: ${VERIFY_HASH}"
           echo "${VERIFY_HASH}" > verify_hash.txt
 
